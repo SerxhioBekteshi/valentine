@@ -9,6 +9,7 @@ function App() {
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_moveCount, setMoveCount] = useState(0);
+
   const [showDialog, setShowDialog] = useState(false);
   const [accepted, setAccepted] = useState(false);
   const [isNoButtonAbsolute, setIsNoButtonAbsolute] = useState(false);
@@ -78,9 +79,9 @@ function App() {
                 setTimeout(
                   () =>
                     setFloatingHearts((prev: any) =>
-                      prev.filter((h: any) => h.id !== id)
+                      prev.filter((h: any) => h.id !== id),
                     ),
-                  2000
+                  2000,
                 );
               }}
             >

@@ -18,6 +18,7 @@ function App() {
   const [numberOfClicks, setNumberOfClicks] = useState<number>(0);
   const [showPopup, setShowPopup] = useState(false);
   const [dialogCloseCount, setDialogCloseCount] = useState(0);
+  const [showTrickedMessage, setShowTrickedMessage] = useState(false);
 
   const moveNoButton = () => {
     setIsNoButtonAbsolute(true);
@@ -33,7 +34,21 @@ function App() {
     });
   };
 
-  const handleYes = () => setAccepted(true);
+  const handleYes = (showTricked: boolean = false) => {
+    setAccepted(true);
+    setShowTrickedMessage(showTricked);
+    // Reset all other state
+    setNoButtonPosition({ x: 0, y: 0 });
+    setMoveCount(0);
+    setShowDialog(false);
+    setIsNoButtonAbsolute(false);
+    setFloatingHearts([]);
+    setText("Click Me!");
+    setNumberOfClicks(0);
+    setShowPopup(false);
+    setDialogCloseCount(0);
+  };
+
   const closeDialog = () => setShowDialog(false);
 
   if (accepted) {
@@ -105,9 +120,11 @@ function App() {
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-red-600 mb-8 text-center">
-            Hahaha tricked you 😂💕
-          </h1>
+          {showTrickedMessage && (
+            <h1 className="text-4xl md:text-6xl font-bold text-red-600 mb-8 text-center">
+              Hahaha tricked you 😂💕
+            </h1>
+          )}
           <p className="mt-8 text-2xl text-red-500 text-center font-semibold ">
             Happy Valentine's Day Lopa 🌹
           </p>
@@ -141,7 +158,7 @@ function App() {
 
         <div className="flex gap-6 justify-center items-center relative">
           <button
-            onClick={handleYes}
+            onClick={() => handleYes(false)}
             className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-full text-xl md:text-2xl shadow-lg transform transition hover:scale-110"
           >
             Yes!!!!!!! 💝
@@ -175,7 +192,7 @@ function App() {
       {showDialog && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-          onClick={handleYes}
+          onClick={() => handleYes(true)}
         >
           <div
             className="bg-white rounded-2xl p-8 max-w-md shadow-2xl"
@@ -193,7 +210,7 @@ function App() {
               onClick={() => {
                 const newCount = dialogCloseCount + 1;
                 if (newCount >= 3) {
-                  handleYes();
+                  handleYes(true);
                   setDialogCloseCount(0);
                 } else {
                   closeDialog();

@@ -37,7 +37,6 @@ function App() {
   const handleYes = (showTricked: boolean = false) => {
     setAccepted(true);
     setShowTrickedMessage(showTricked);
-    // Reset all other state
     setNoButtonPosition({ x: 0, y: 0 });
     setMoveCount(0);
     setShowDialog(false);
